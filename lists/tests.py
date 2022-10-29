@@ -1,6 +1,7 @@
 from django.urls import resolve
 from django.test import TestCase
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest
+from django.template.loader import render_to_string
 
 from lists.views import home_page 
 
@@ -10,10 +11,21 @@ class HomePageTest(TestCase):
         found = resolve('/')
         self.assertEqual(found.func, home_page)
 
+    """
     def test_home_page_returns_correct_html(self) -> None:
-        request = HttpRequest()
-        response = home_page(request)
-        html = response.content.decode('utf8')
+        request = HttpRequest() #this is a request object that we manually created to our view
+        response = home_page(request) #resolves into a HttpResponse object
+        html = response.content.decode('utf-8')
         self.assertTrue(html.startswith('<html>'))
-        self.assertIn('<title>To-DO list</title>', html)
+        self.assertin('<title>To-Do</title>', html)
         self.assertTrue(html.endswith('</html>'))
+
+        we can also render our template here
+        expected_response = render_to_string('home.html')
+        self.assertEqual(html, expected_response)
+
+    """
+
+    def test_home_page_returns_correct_html(self) -> None:
+        response = self.client.get('/')
+        self.assertTemplateUsed(response, 'home.html')
