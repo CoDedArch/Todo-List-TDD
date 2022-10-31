@@ -1,6 +1,6 @@
 from django.urls import resolve
 from django.test import TestCase
-
+from django.http import HttpRequest
 from lists.views import home_page 
 
 # Create your tests here.
@@ -26,4 +26,9 @@ class HomePageTest(TestCase):
 
     def test_home_page_returns_correct_html(self) -> None:
         response = self.client.get('/')
+        self.assertTemplateUsed(response, 'home.html')
+    
+    def test_can_save_a_POST_request(self) -> None:
+        response = self.client.post('/', data = {'item_text': 'A new item list'})
+        self.assertIn('A new item list', response.content.decode('utf-8'))
         self.assertTemplateUsed(response, 'home.html')
