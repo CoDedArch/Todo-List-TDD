@@ -73,15 +73,8 @@ class NewVisitorTest(LiveServerTestCase):
         self.wait_for_row_in_list_table('1: Buy peacock feathers')
         self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
 
-
-
-        # Edith wonders whether the site will remember her list. Then she sees
-        # That the site has generated a unique URL for her -- there is some 
-        # expalanatory text to that effect.
-
-        # She visits that URL - her to-do list is still there.
-
-        # Satisfied, she goes back to sleep
+        #She is satisfied and she goes back to sleep
+        
     def test_multiple_users_can_start_list_at_different_urls(self) -> None:
         #Edith starts a new to-do list
         self.browser.get(self.live_server_url)
@@ -103,7 +96,7 @@ class NewVisitorTest(LiveServerTestCase):
         # Framcis visit the home page. There is no sign of Edith's
         #list
         self.browser.get(self.live_server_url)
-        page_text = self.browser.find_element(By.TAG_NAME, ' body').text
+        page_text = self.browser.find_element(By.TAG_NAME, 'body').text
         self.assertNotIn('Buy peacock feathers', page_text)
         self.assertNotIn('make a fly', page_text)
 
@@ -128,3 +121,11 @@ class NewVisitorTest(LiveServerTestCase):
         
 
         self.fail('Finish the test!')
+
+        # Edith wonders whether the site will remember her list. Then she sees
+        # That the site has generated a unique URL for her -- there is some 
+        # expalanatory text to that effect.
+
+        # She visits that URL - her to-do list is still there.
+
+        # Satisfied, she goes back to sleep
