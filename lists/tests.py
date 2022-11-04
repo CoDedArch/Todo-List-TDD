@@ -54,6 +54,17 @@ class ListViewTest(TestCase):
         self.assertContains(response, 'Itemey 1')
         self.assertContains(response, 'Itemey 2')
 
+
+class NewListItems(TestCase):
+    def test_can_save_a_POST_request(self) -> None:
+        self.client.post('/lists/new', data={'item_text': 'A new list item'})
+        self.assertEqual(Item.objects.count(), 1)
+        new_item = Item.objects.all()[0]
+        self.assertEqual(new_item.text, 'A new list item')
+
+
+
+
 class ItemModelTest(TestCase):
     
     def test_saving_and_retrieving_items(self) -> None:
