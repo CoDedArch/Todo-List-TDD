@@ -1,3 +1,4 @@
+from cgitb import text
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from lists.models import Item
@@ -5,16 +6,16 @@ from lists.models import Item
 # Create your views here.
 
 def home_page(request):
-    # item = Item()
-    # item.text = request.POST.get('item_text', '')
-    # item.save()
-    if request.method == 'POST':
-        Item.objects.create(text = request.POST.get('item_text', ''))
-        return redirect('/lists/the-only-list-in-the-world/')
-
-    items = Item.objects.all()
-    return render(request, 'home.html', {'items': items,})
+    return render(request, 'home.html')
 
 def view_list(request):
     items = Item.objects.all()
     return render(request, 'list.html', {'items': items})
+
+def new_list(request):
+    """/lists/new is the url that resovles to this function. this is a non trailing / which means 
+    it changes the state of our database
+    """
+    Item.objects.create(text= request.POST.get('item_text', ''))
+    return redirect('/lists/the-only-list-in-the-world/')
+    

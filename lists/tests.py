@@ -1,6 +1,7 @@
+from urllib import response
 from django.urls import resolve
 from django.test import TestCase
-from lists.views import home_page
+from lists.views import home_page, new_list, view_list
 from django.template.loader import render_to_string
 from lists.models import Item 
 
@@ -29,18 +30,20 @@ class HomePageTest(TestCase):
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'home.html')
     
-    def test_can_save_a_POST_request(self) -> None:
-        self.client.post('/', data = {'item_text': 'A new item list'})
-        self.assertEqual(Item.objects.count(), 1)
-        new_item = Item.objects.first()
-        self.assertEqual(new_item.text, 'A new item list')
+    # def test_can_save_a_POST_request(self) -> None:
+    #     self.client.post('/', data = {'item_text': 'A new item list'})
+    #     self.assertEqual(Item.objects.count(), 1)
+    #     new_item = Item.objects.first()
+    #     self.assertEqual(new_item.text, 'A new item list')
 
-    def test_redirects_afeter_a_POST(self) -> None:
-        response = self.client.post('/', data = {'item_text': 'A new item list'})
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], '/lists/the-only-list-in-the-world/')
+    # def test_redirects_afeter_a_POST(self) -> None:
+    #     response = self.client.post('/', data = {'item_text': 'A new item list'})
+    #     self.assertRedirects(response, '/lists/the-only-list-in-the-world/')
 
 class ListViewTest(TestCase):
+    def test_url_resolves_to_view_function(self) -> None:
+        found = resolve('/lists/the-only-list-in-the-world/')
+        self.assertEqual(found.func, view_list)
     def test_uses_list_template(self) -> None:
         response = self.client.get('/lists/the-only-list-in-the-world/')
         self.assertTemplateUsed(response, 'list.html')
@@ -56,11 +59,19 @@ class ListViewTest(TestCase):
 
 
 class NewListItems(TestCase):
+    def test_url_resolves_to_fucntion(self) -> None:
+        found = resolve('/lists/new')
+        self.assertEqual(found.func, new_list)
+
     def test_can_save_a_POST_request(self) -> None:
         self.client.post('/lists/new', data={'item_text': 'A new list item'})
         self.assertEqual(Item.objects.count(), 1)
         new_item = Item.objects.all()[0]
         self.assertEqual(new_item.text, 'A new list item')
+
+    def test_Redirect_after_a_POST(self) -> None:
+        response = self.client.post('/lists/new', data = { 'item_text': 'A new list item'})
+        self.assertRedirects(response, '/lists/the-only-list-in-the-world/')
 
 
 
