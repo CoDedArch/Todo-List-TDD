@@ -6,9 +6,10 @@
     <body>
         <h1>Start A New To-Do list With US: </h1> <br>
         <form method="POST" action = "/lists/new">
-            
-            <input type="text" id="id_new_item" placeholder="Enter a to-do item" name="item_text"><br>
-            {% csrf_token %}
+            <p style="text-align: center;">
+                <input type="text" id="id_new_item" placeholder="Enter a to-do item" name="item_text"><br>
+                {% csrf_token %}
+            </p>
         </form>
     </body>
 </html>

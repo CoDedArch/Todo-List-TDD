@@ -5,10 +5,11 @@
     </head>
     <body>
         <h1>CREATE A To-Do list With US: </h1> <br>
-        <form method="POST" action = "/lists/{ list.id }/add_item">
-            
-            <input type="text" id="id_new_item" placeholder="Enter a to-do item" name="item_text"><br>
-            {% csrf_token %}
+        <form method="POST" action = "/lists/{{ list.id }}/add_item">
+            <p style="text-align: center;">
+                <input type="text" id="id_new_item" placeholder="Enter a to-do item" name="item_text"><br>
+                {% csrf_token %}
+            </p>
         </form>
         
         <table id="id_list_table">

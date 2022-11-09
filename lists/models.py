@@ -11,5 +11,5 @@ class List(models.Model):
 class Item(models.Model):
     text = models.TextField(default = '')
     # this only gives us the string representation of the object but we want it to be related to the list object its self
-    list = models.ForeignKey(List, default= None, on_delete = models.SET_DEFAULT)
+    list = models.ForeignKey(List, default= None, on_delete = models.CASCADE)
 
