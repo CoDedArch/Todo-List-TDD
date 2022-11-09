@@ -70,8 +70,8 @@ class NewVisitorTest(LiveServerTestCase):
         
         # The page updates again, and now shows both items on her list
 
-        self.wait_for_row_in_list_table('1: Buy peacock feathers')
         self.wait_for_row_in_list_table('2: Use peacock feathers to make a fly')
+        self.wait_for_row_in_list_table('1: Buy peacock feathers')
 
         #She is satisfied and she goes back to sleep
         
@@ -107,7 +107,7 @@ class NewVisitorTest(LiveServerTestCase):
         inputbox.send_keys(Keys.ENTER)
         self.wait_for_row_in_list_table('1: Buy milk')
 
-        # Francis get hs own unique URL
+        # Francis get his own unique URL
         francis_list_url = self.browser.current_url
         self.assertRegex(francis_list_url, '/lists/.+')
         self.assertNotEqual(francis_list_url, edith_list_url)
