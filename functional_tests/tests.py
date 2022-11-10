@@ -21,7 +21,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.browser.quit()  
 
     def wait_for_row_in_list_table(self, row_text: list ) -> None:
-        MAX_WAIT = 10
+        MAX_WAIT =  10
         start_time = time.time()
         while True:
             try:
