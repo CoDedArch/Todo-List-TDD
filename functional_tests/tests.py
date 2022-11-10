@@ -1,4 +1,4 @@
-from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.keys import Keys
@@ -8,7 +8,7 @@ from selenium.common.exceptions import WebDriverException
 import time
 
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
     
     
     def setUp(self) -> None:
@@ -17,6 +17,7 @@ class NewVisitorTest(LiveServerTestCase):
         self.browser = webdriver.Firefox(executable_path=r'C:\Users\hp\Downloads\geckodriver.exe', options = self.options)
 
     def tearDown(self) -> None:
+        self.browser.refresh()
         self.browser.quit()  
 
     def wait_for_row_in_list_table(self, row_text: list ) -> None:
