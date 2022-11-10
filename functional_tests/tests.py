@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import WebDriverException
 #needs a unittest which is a module in the standard library
 import time
+import os
 
 
 class NewVisitorTest(StaticLiveServerTestCase):
@@ -15,6 +16,10 @@ class NewVisitorTest(StaticLiveServerTestCase):
         self.options = Options()
         self.options.binary_location = r'C:\Program Files\Mozilla Firefox\firefox.exe'
         self.browser = webdriver.Firefox(executable_path=r'C:\Users\hp\Downloads\geckodriver.exe', options = self.options)
+        staging_server = os.environ.get('STAGING_SERVER')
+        if staging_server:
+            self.live_server_url = 'http://' + staging_server
+
 
     def tearDown(self) -> None:
         self.browser.refresh()
